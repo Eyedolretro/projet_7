@@ -1,0 +1,94 @@
+""" 
+PSEUDO CODE
+
+ENTRÉES :
+- liste_actions : liste d’actions, chacune avec (nom, prix, bénéfice en %)
+- budget_max : entier (ex. 500)
+
+INITIALISATION :
+- n = nombre d’actions dans liste_actions
+- tableau = matrice (n+1) x (budget_max+1) remplie de 0
+  // tableau[i][b] = bénéfice max avec les i premières actions et budget b
+
+POUR i de 1 à n :
+    action = liste_actions[i-1]
+    prix = action.prix
+    gain = prix * (action.bénéfice / 100)
+    
+    POUR b de 0 à budget_max :
+        SI prix <= b :
+            // On peut prendre l’action i ou non
+            tableau[i][b] = max(
+                tableau[i-1][b],                 // Ne pas prendre l’action i
+                tableau[i-1][b - prix] + gain   // Prendre l’action i
+            )
+        SINON :
+            tableau[i][b] = tableau[i-1][b]     // Trop cher, on ne prend pas
+
+// Reconstruction de la solution optimale :
+portefeuille = liste vide
+b = budget_max
+
+POUR i de n à 1 (en arrière) :
+    SI tableau[i][b] != tableau[i-1][b] :
+        portefeuille.ajouter(liste_actions[i-1])
+        b = b - liste_actions[i-1].prix
+
+RETOURNER portefeuille, tableau[n][budget_max]  // liste d’actions + bénéfice max
+
+
+Contexte précis :
+ENTRÉES :
+- liste_actions = [
+    {nom: "Action-1", prix: 20, bénéfice: 5},
+    {nom: "Action-2", prix: 30, bénéfice: 10},
+    {nom: "Action-3", prix: 50, bénéfice: 15},
+    {nom: "Action-4", prix: 70, bénéfice: 20},
+    {nom: "Action-5", prix: 60, bénéfice: 17},
+    {nom: "Action-6", prix: 80, bénéfice: 25},
+    {nom: "Action-7", prix: 22, bénéfice: 7},
+    {nom: "Action-8", prix: 26, bénéfice: 11},
+    {nom: "Action-9", prix: 48, bénéfice: 13},
+    {nom: "Action-10", prix: 34, bénéfice: 27},
+    {nom: "Action-11", prix: 42, bénéfice: 17},
+    {nom: "Action-12", prix: 110, bénéfice: 9},
+    {nom: "Action-13", prix: 38, bénéfice: 23},
+    {nom: "Action-14", prix: 14, bénéfice: 1},
+    {nom: "Action-15", prix: 18, bénéfice: 3},
+    {nom: "Action-16", prix: 8, bénéfice: 8},
+    {nom: "Action-17", prix: 4, bénéfice: 12},
+    {nom: "Action-18", prix: 10, bénéfice: 14},
+    {nom: "Action-19", prix: 24, bénéfice: 21},
+    {nom: "Action-20", prix: 114, bénéfice: 18}
+]
+
+- budget_max = 500
+
+INITIALISATION :
+- n = longueur de liste_actions
+- tableau = matrice (n+1) x (budget_max+1) remplie de 0
+  // tableau[i][b] = bénéfice max avec i premières actions et budget b
+
+POUR i de 1 à n :
+    action = liste_actions[i-1]
+    prix = action.prix
+    gain = prix * (action.bénéfice / 100)
+
+    POUR b de 0 à budget_max :
+        SI prix <= b :
+            tableau[i][b] = max(
+                tableau[i-1][b],
+                tableau[i-1][b - prix] + gain
+            )
+        SINON :
+            tableau[i][b] = tableau[i-1][b]
+
+portefeuille = liste vide
+b = budget_max
+
+POUR i de n à 1 (en arrière) :
+    SI tableau[i][b] != tableau[i-1][b] :
+        portefeuille.ajouter(liste_actions[i-1])
+        b = b - liste_actions[i-1].prix
+
+RETOURNER portefeuille, tableau[n][budget_max]
