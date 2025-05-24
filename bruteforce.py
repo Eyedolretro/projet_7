@@ -1,7 +1,6 @@
+from itertools import combinations
 
-
-# Liste des actions : nom, prix, bénéfice en % """
-# Liste des actions : nom, prix, bénéfice en %
+# Liste des actions (nom, prix, bénéfice en %)
 liste_actions = [
     {"nom": "Action-1", "prix": 20, "benefice": 5},
     {"nom": "Action-2", "prix": 30, "benefice": 10},
@@ -27,45 +26,33 @@ liste_actions = [
 
 budget_max = 500
 
-def maximiser_profit(actions, budget):
+def brute_force_maximiser_profit(actions, budget):
     n = len(actions)
-    # tableau[i][b] = bénéfice max avec i premières actions et budget b
-    tableau = [[0]*(budget+1) for _ in range(n+1)]
+    meilleur_benefice = 0
+    meilleur_portefeuille = []
 
-    # Remplissage du tableau
-    for i in range(1, n+1):
-        prix = actions[i-1]['prix']
-        gain = prix * (actions[i-1]['benefice'] / 100)
-        for b in range(budget+1):
-            if prix <= b:
-                tableau[i][b] = max(
-                    tableau[i-1][b],
-                    tableau[i-1][b - prix] + gain
+    # Tester toutes les combinaisons possibles (de 1 à n actions)
+    for r in range(1, n + 1):
+        for subset in combinations(actions, r):
+            cout_total = sum(action['prix'] for action in subset)
+            if cout_total <= budget:
+                benefice_total = sum(
+                    action['prix'] * (action['benefice'] / 100)
+                    for action in subset
                 )
-            else:
-                tableau[i][b] = tableau[i-1][b]
+                if benefice_total > meilleur_benefice:
+                    meilleur_benefice = benefice_total
+                    meilleur_portefeuille = list(subset)
 
-    # Reconstruction du portefeuille optimal
-    portefeuille = []
-    b = budget
-    for i in range(n, 0, -1):
-        if tableau[i][b] != tableau[i-1][b]:
-            action = actions[i-1]
-            portefeuille.append(action)
-            b -= action['prix']
+    return meilleur_portefeuille, meilleur_benefice
 
-    portefeuille.reverse()  # Pour garder l'ordre original
+if __name__ == "__main__":
+    portefeuille_optimal, benefice = brute_force_maximiser_profit(liste_actions, budget_max)
 
-    benefice_max = tableau[n][budget]
-    return portefeuille, benefice_max
+    print("Portefeuille optimal (force brute) :")
+    for action in portefeuille_optimal:
+        print(f"{action['nom']} - Prix: {action['prix']}€, Bénéfice: {action['benefice']}%")
 
-# Exécution
-portefeuille_optimal, benefice = maximiser_profit(liste_actions, budget_max)
-
-print("Portefeuille optimal :")
-for action in portefeuille_optimal:
-    print(f"{action['nom']} - Prix: {action['prix']}€, Bénéfice: {action['benefice']}%")
-
-print(f"\nBénéfice total maximal attendu après 2 ans : {benefice:.2f}€")
-print(f"Coût total : {sum(a['prix'] for a in portefeuille_optimal)}€")
-print(f"Budget restant : {budget_max - sum(a['prix'] for a in portefeuille_optimal)}€")
+    print(f"\nBénéfice total maximal : {benefice:.2f}€")
+    print(f"Coût total : {sum(a['prix'] for a in portefeuille_optimal)}€")
+    print(f"Budget restant : {budget_max - sum(a['prix'] for a in portefeuille_optimal)}€")

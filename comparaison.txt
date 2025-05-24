@@ -1,0 +1,102 @@
+1. Description des algorithmes
+
+Algorithme	Description succincte
+Force brute	Génère toutes les combinaisons possibles d’actions et calcule le bénéfice pour chaque sous-ensemble valide (budget respecté).
+Programmation dynamique (optimisé)	Utilise une table dynamique pour calculer progressivement le bénéfice maximal pour chaque sous-ensemble partiel et budget partiel, évitant ainsi les recalculs inutiles.
+2. Complexité temporelle (notation Big-O)
+
+Algorithme	Complexité (en fonction de n = nombre d’actions, B = budget)
+Force brute	
+O
+(
+2
+n
+×
+n
+)
+O(2 
+n
+ ×n)
+- Génère toutes les combinaisons : 
+2
+n
+2 
+n
+ .
+- Pour chaque combinaison, somme des prix/bénéfices prend en moyenne
+O
+(
+n
+)
+O(n).
+Programmation dynamique	
+O
+(
+n
+×
+B
+)
+O(n×B)
+- Pour chaque action (n), on parcours tous les budgets possibles (B).
+- Calculs simples à chaque étape (max, addition).
+3. Complexité spatiale (mémoire)
+
+Algorithme	Mémoire requise
+Force brute	
+O
+(
+n
+)
+O(n)
+- Stockage temporaire d’une combinaison.
+- Pas de structure mémoire significative autre que la liste d’actions.
+Programmation dynamique	
+O
+(
+n
+×
+B
+)
+O(n×B)
+- Stockage d’une matrice/tableau à deux dimensions (nombre d’actions × budget).
+4. Analyse détaillée
+
+Force brute
+Avantages :
+Simple à implémenter et à comprendre.
+Trouve toujours la solution optimale car elle teste toutes les combinaisons.
+Inconvénients :
+Exponentialité en temps : deviens rapidement inutilisable à partir d’une vingtaine d’actions (~1 million de combinaisons).
+Faible utilisation mémoire mais temps prohibitif.
+Inefficace pour budgets élevés ou grands ensembles.
+Programmation dynamique
+Avantages :
+Beaucoup plus efficace pour des budgets raisonnables.
+Complexité polynomiale : temps de calcul proportionnel au produit n × B.
+Utilise la mémorisation pour éviter les recalculs.
+Inconvénients :
+Utilisation mémoire importante, surtout si le budget est très grand.
+Ne convient pas si le budget est extrêmement grand (ex: millions), car la matrice serait trop grosse.
+Plus complexe à comprendre et à implémenter.
+5. Illustration comparative
+
+Critère	Force brute	Programmation dynamique
+Temps	Exponentiel 
+2
+n
+2 
+n
+  (rapide pour n < 20)	Polynomial 
+n
+×
+B
+n×B (pratique pour budgets modérés)
+Mémoire	Faible	Élevée (dépend du budget)
+Solution optimale garantie	Oui	Oui
+Facilité d’implémentation	Simple	Moyennement complexe
+Utilisation pratique	Ensembles petits (moins de 20 actions)	Ensembles plus grands avec budget raisonnable
+6. Conclusion
+
+Algorithme choisi selon le contexte :
+- Force brute : pour petits nombres d’actions, budget peu important, ou comme méthode de référence simple.
+- Programmation dynamique : lorsque le budget et le nombre d’actions sont plus importants, nécessitant une solution optimale rapide.

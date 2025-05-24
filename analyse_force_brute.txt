@@ -1,0 +1,65 @@
+Analyse de l’algorithme de force brute pour maximiser le profit
+
+1. Principe de l’algorithme
+L’algorithme utilise une méthode exhaustive (force brute) pour trouver la meilleure combinaison d’actions qui maximise le bénéfice total sans dépasser un budget donné.
+
+Il teste toutes les combinaisons possibles d’actions, de taille 1 jusqu’à la taille maximale (nombre total d’actions).
+Pour chaque combinaison, il calcule :
+Le coût total (somme des prix des actions).
+Le bénéfice total (somme des bénéfices en euros, calculés à partir du prix et du pourcentage de bénéfice).
+Il garde en mémoire la combinaison qui offre le meilleur bénéfice tout en respectant la contrainte de budget.
+2. Complexité algorithmique
+Le nombre total de combinaisons possibles d’un ensemble de taille n est 
+2
+n
+−
+1
+2 
+n
+ −1 (toutes les sous-ensembles non vides).
+L’algorithme génère donc potentiellement exponentiellement toutes les combinaisons, ce qui le rend très coûteux en temps de calcul pour un grand nombre d’actions.
+Plus précisément, la complexité est 
+O
+(
+2
+n
+×
+n
+)
+O(2 
+n
+ ×n) car pour chaque sous-ensemble il faut calculer la somme des prix et bénéfices (opération proportionnelle à la taille de la combinaison).
+3. Avantages
+Exhaustivité : L’algorithme garantit de trouver la solution optimale puisqu’il teste toutes les possibilités.
+Simplicité conceptuelle : Facile à comprendre et à implémenter.
+Utilisation dans des cas petits : Pour un petit nombre d’actions (moins d’une vingtaine), la solution brute est réalisable.
+4. Inconvénients
+Non scalable : L’algorithme devient rapidement inutilisable lorsque le nombre d’actions augmente, à cause de la croissance exponentielle.
+Performance lente : Même avec des optimisations mineures, la force brute reste lente pour des grandes tailles.
+Pas d’optimisation intermédiaire : Il ne mémorise pas les résultats intermédiaires, contrairement à la programmation dynamique, par exemple.
+5. Contexte d’utilisation
+Utile comme solution de référence pour vérifier d’autres algorithmes plus efficaces (programmation dynamique, algorithmes gloutons).
+Adapté pour des ensembles de petite taille.
+Éducatif pour comprendre la nature combinatoire du problème.
+6. Possibles améliorations
+Élagage (pruning) : Ne pas continuer l’évaluation de certaines combinaisons dès que leur coût dépasse le budget.
+Programmation dynamique : Pour réduire le temps de calcul en mémorisant les sous-solutions (problème du sac à dos).
+Algorithmes heuristiques ou approchés : Pour trouver une bonne solution rapidement sans garantir l’optimalité (ex: algorithmes gloutons, métaheuristiques).
+7. Résumé
+Aspect	Détail
+Type d’algorithme	Force brute (exhaustive)
+Complexité	Exponentielle 
+O
+(
+2
+n
+×
+n
+)
+O(2 
+n
+ ×n)
+Solution optimale	Oui, garantie
+Facilité d’implémentation	Simple
+Scalabilité	Faible, inadapté pour grands ensembles
+Cas d’usage	Ensembles petits, solution de référence, pédagogie

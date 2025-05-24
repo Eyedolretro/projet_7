@@ -1,5 +1,51 @@
+Pseudo code ( force brute):
+Définir liste_actions comme liste de dictionnaires contenant :
+    - nom (string)
+    - prix (nombre)
+    - bénéfice (pourcentage)
+
+Définir budget_max
+
+Fonction brute_force_maximiser_profit(actions, budget) :
+    n ← nombre d’actions
+    meilleur_benefice ← 0
+    meilleur_portefeuille ← liste vide
+
+    Pour r allant de 1 à n :
+        Pour chaque sous-ensemble subset de taille r dans actions :
+            cout_total ← somme des prix des actions dans subset
+            Si cout_total ≤ budget alors :
+                benefice_total ← somme des (prix * bénéfice / 100) pour chaque action dans subset
+                Si benefice_total > meilleur_benefice alors :
+                    meilleur_benefice ← benefice_total
+                    meilleur_portefeuille ← copie de subset
+
+    Retourner meilleur_portefeuille, meilleur_benefice
+
+
+Début du programme principal :
+
+    Appeler brute_force_maximiser_profit(liste_actions, budget_max)
+        et récupérer portefeuille_optimal, benefice
+
+    Afficher "Portefeuille optimal (force brute) :"
+    Pour chaque action dans portefeuille_optimal :
+        Afficher nom, prix, bénéfice de l’action
+
+    Afficher bénéfice total maximal
+    Afficher coût total des actions sélectionnées
+    Afficher budget restant (budget_max - coût total)
+
+
+
+
+
+
+
+
+
 """ 
-PSEUDO CODE
+PSEUDO CODE (programme optimisé)
 
 ENTRÉES :
 - liste_actions : liste d’actions, chacune avec (nom, prix, bénéfice en %)
